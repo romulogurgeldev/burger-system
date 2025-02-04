@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import OrderForm from './OrderForm';
+import './Menu.css';
 
 const Menu = () => {
   const [products, setProducts] = useState([]);
@@ -20,12 +20,20 @@ const Menu = () => {
   return (
     <div>
       <h1>Menu</h1>
-      <ul>
+      <div className="row">
         {products.map(product => (
-          <li key={product._id}>{product.name} - ${product.price}</li>
+          <div className="col-md-4 mb-4" key={product._id}>
+            <div className="card">
+              <img src={`/assets/${product.name}.png`} className="card-img-top" alt={product.name} />
+              <div className="card-body">
+                <h5 className="card-title">{product.name}</h5>
+                <p className="card-text">${product.price}</p>
+                <button className="btn btn-primary">Order Now</button>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
-      <OrderForm products={products} />
+      </div>
     </div>
   );
 };

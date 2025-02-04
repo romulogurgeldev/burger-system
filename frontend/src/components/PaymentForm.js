@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import './PaymentForm.css';
 
 const PaymentForm = ({ order }) => {
   const stripe = useStripe();
@@ -37,9 +38,10 @@ const PaymentForm = ({ order }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type="submit" disabled={!stripe}>Pagar</button>
+    <form className="form-group" onSubmit={handleSubmit}>
+      <label htmlFor="cardElement">Card Number</label>
+      <CardElement id="cardElement" className="form-control" />
+      <button type="submit" className="btn btn-primary mt-3" disabled={!stripe}>Pagar</button>
       {error && <p>{error}</p>}
       {success && <p>Pagamento realizado com sucesso!</p>}
     </form>

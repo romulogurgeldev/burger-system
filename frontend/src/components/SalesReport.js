@@ -19,12 +19,26 @@ const SalesReport = () => {
     fetchSales();
   }, [token]);
 
+  const exportToCSV = () => {
+    const csvData = sales.map(sale => `Order ID: ${sale._id}, Total: ${sale.total}`).join('\n');
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'sales_report.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div>
-      <h2>Relatório de Vendas</h2>
+      <h2>Sales Report</h2>
+      <button onClick={exportToCSV}>Export to CSV</button>
       <ul>
         {sales.map(sale => (
-          <li key={sale._id}>Pedido ID: {sale.orderId} - Total: {sale.total}</li>
+          <li key={sale._id}>Order ID: {sale._id} - Total: {sale.total}</li>
         ))}
       </ul>
     </div>
